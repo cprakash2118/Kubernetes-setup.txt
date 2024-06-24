@@ -1,0 +1,137 @@
+[root@k8s-master20-02 ~]# cat history.txt 
+    1  rm -rf ~/.bash_history 
+    2  poweroff
+    3  hostnamectl set-hostname k8s-master-02.lab.example.com
+    4  hostnamectl set-hostname k8s-master20-02.lab.example.com
+    5  hostname -I >> /etc/hosts
+    6  hostname  >> /etc/hosts
+    7  vim /etc/hosts
+    8  exit
+    9  sudo modprobe br_netfilter
+   10  sudo modprobe ip_vs
+   11  sudo modprobe ip_vs_rr
+   12  sudo modprobe ip_vs_wrr
+   13  sudo modprobe ip_vs_sh
+   14  sudo modprobe overlay
+   15  cat > /etc/modules-load.d/kubernetes.conf << EOF
+   16  br_netfilter
+   17  ip_vs
+   18  ip_vs_rr
+   19  ip_vs_wrr
+   20  ip_vs_sh
+   21  overlay
+   22  EOF
+   23  cat /etc/modules-load.d/kubernetes.conf
+   24  cat > /etc/sysctl.d/kubernetes.conf << EOF
+   25  net.ipv4.ip_forward = 1
+   26  net.bridge.bridge-nf-call-ip6tables = 1
+   27  net.bridge.bridge-nf-call-iptables = 1
+   28  EOF
+   29  sysctl --system
+   30  sudo swapoff -a
+   31  sed -e '/swap/s/^/#/g' -i /etc/fstab
+   32  cat /etc/fstab 
+   33  sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+   34  sudo dnf makecache
+   35  sudo dnf -y install containerd.io
+   36  sudo sh -c "containerd config default > /etc/containerd/config.toml" ; cat /etc/containerd/config.toml
+   37  vim /etc/containerd/config.toml 
+   38  sudo systemctl enable --now containerd.service
+   39  sudo systemctl reboot
+   40  hostname
+   41  dnf install kernel-devel 
+   42  mkdir tmp
+   43  cd tmp/
+   44  git clone https://github.com/cprakash2118/kubernetes-test
+   45  cat kubernetes-test/New-file.txt |less
+   46  sudo systemctl status containerd.service
+   47  cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/repodata/repomd.xml.key
+exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni
+EOF
+
+   48  dnf makecache; dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+   49  systemctl enable --now kubelet.service
+   50  sudo kubeadm config images pull
+   51  kubeadm init --pod-network-cidr=10.244.0.0/16
+   52  mkdir -p $HOME/.kube
+   53    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+   54    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+   55  kubectl version 
+   56  kubectl get nodes
+   57  crictl ps 
+   58  kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/tigera-operator.yaml
+   59  vim /etc/crictl.yaml
+   60  kubectl version 
+   61  kubectl get nodes
+   62  crictl ps 
+   63  cat /etc/crictl.yaml 
+   64  mkdir /etc/systemd/system/kubelet.service.d/
+   65  vim /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+   66  systemctl daemon-reload 
+   67  crictl ps 
+   68  kubectl version 
+   69  kubectl get nodes
+   70  kubectl --help |less
+   71  kubectl completion --help |less
+   72   kubectl completion bash > ~/.kube/completion.bash.inc
+   73    printf "
+  # kubectl shell completion
+  source '$HOME/.kube/completion.bash.inc'
+  " >> $HOME/.bash_profile
+   74    source $HOME/.bash_profile
+   75  kubectl version 
+   76  kubectl get nodes
+   77  kubectl describe nodes k8s-master20-02.lab.example.com 
+   78  kubectl describe nodes k8s-master20-02.lab.example.com  |less
+   79  kubectl get nodes
+   80  kubectl version 
+   81  kubectl get nodes
+   82  kubectl get pods -n kube-system 
+   83  systemctl status kubelet.service |less
+   84  kubectl get nodes
+   85  kubectl version 
+   86  kubectl get nodes
+   87  vim /etc/containerd/config.toml 
+   88  kubectl get nodes
+   89  kubectl version 
+   90  kubectl get pods -n kube-system 
+   91* kubectl events | 
+   92  kubectl version 
+   93  kubectl get nodes
+   94  crictl ps
+   95  crictl ps -a
+   96  kubectl get nodes
+   97  crictl ps -a
+   98  crictl ps 
+   99  hostname
+  100  kubectl get nodes
+  101  kubectl events 
+  102  kubectl get pods -n kube-system 
+  103  curl -O https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
+  104  ll
+  105  sed -i 's/cidr: 192\.168\.0\.0\/16/cidr: 10.244.0.0\/16/g' custom-resources.yaml
+  106  kubectl create -f custom-resources.yaml
+  107  kubeadm token create --print-join-command
+  108  kubectl get nodes
+  109  vim /etc/hosts
+  110  kubectl get nodes
+  111  uname -r
+  112  kubectl get nodes
+  113  kubeadm token create --print-join-command
+  114  kubectl get nodes
+  115  for x in {1..100}; do kubectl get nodes ; sleep 5; echo "-------------------"; done
+  116  kubectl get nodes
+  117  uname -r
+  118  rpm -qa | grep kernel
+  119  vim /etc/hosts
+  120  kubectl get nodes
+  121  cat /etc/hosts
+  122  history |less
+  123  history  > history.txt 
+[root@k8s-master20-02 ~]# 
