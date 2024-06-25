@@ -134,12 +134,6 @@ dnf makecache; dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernet
 
 systemctl enable --now kubelet.service
 
-vim /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-[Service]
-Environment="KUBELET_EXTRA_ARGS=--container-runtime=remote --container-runtime-endpoint=unix:///run/containerd/containerd.sock"
-
-systemctl daemon-reload
-
 
 NOte: Till here on all the nodes [master/worker]
 ##############################################################################
