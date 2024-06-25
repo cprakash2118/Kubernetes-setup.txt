@@ -166,7 +166,7 @@ wget https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/cu
 sed -i 's/cidr: 192\.168\.0\.0\/16/cidr: 10.244.0.0\/16/g' custom-resources.yaml
 
 kubectl create -f custom-resources.yaml
-
+sudo kubeadm token create --print-join-command
 
 #############################
 Troubleshooting steps 
@@ -176,5 +176,5 @@ rm -rf /var/lib/cni/
 rm -rf /etc/kubernetes
 
 
-sudo kubeadm token create --print-join-command
+
  
