@@ -104,4 +104,34 @@ sudo swapoff -a
  sudo dnf makecache
  sudo dnf -y install containerd.io
  sudo sh -c "containerd config default > /etc/containerd/config.toml" ; cat /etc/containerd/config.toml
+
+Using your preferred text editor, open the /etc/containerd/config.toml file and set the SystemdCgroup variable to true (SystemdCgroup = true):
+SystemdCgroup = true
+
+sudo systemctl reboot
+sudo systemctl status containerd.service
+
+Step5#
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/repodata/repomd.xml.key
+exclude=kubelet kubeadm kubectl cri-tools kubernetes-cni
+EOF
+
+
+dnf makecache; dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+
+systemctl enable --now kubelet.service
+
+NOte: Till here on all the nodes [master/worker]
+##############################################################################
+Step6#  (Only on master node)
+sudo kubeadm config images pull
+
+
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
  
