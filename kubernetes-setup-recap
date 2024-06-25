@@ -1,0 +1,50 @@
+Student20 = StudentX 
+Step1)
+- Login to your Master node as root/redhat or student/student. 
+- Setup the hostname and local name resolution 
+
+# hostnamectl set-hostname k8s-masterX-01.lab.example.com
+# hostname -I >> /etc/hosts
+# hostname >> /etc/hosts
+# 
+172.25.230.188 k8s-masterX-01.lab.example.com
+
+********************
+- Login to your 1st worker node as root/redhat or student/student. 
+- Setup the hostname and local name resolution 
+
+# hostnamectl set-hostname k8s-workerX-01.lab.example.com
+# hostname -I >> /etc/hosts
+# hostname >> /etc/hosts
+# 
+NOte: Get the IP address 
+
+********************
+- Login to your 2nd worker node as root/redhat or student/student. 
+- Setup the hostname and local name resolution 
+
+# hostnamectl set-hostname k8s-workerX-02.lab.example.com
+# hostname -I >> /etc/hosts
+# hostname >> /etc/hosts
+# 
+NOte: Get the IP address
+
+
+*********************
+- Login to your Master node as root/redhat or student/student. 
+- Setup the hostname and local name resolution 
+
+#vim /etc/hosts
+
+172.25.230.188 k8s-master20-01.lab.example.com
+172.25.231.33 k8s-worker20-01.lab.example.com
+172.25.231.142 k8s-worker20-02.lab.example.com
+
+:wq 
+
+cat /etc/hosts
+
+Open 3 terminals - and ssh to both worker nodes via 2nd and 3rd termimals.
+1st-termimal - master20-01   
+2nd-termimal - worker20-01
+3rd-termimal - worker20-02
