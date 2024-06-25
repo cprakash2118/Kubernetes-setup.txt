@@ -134,28 +134,25 @@ dnf makecache; dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernet
 
 systemctl enable --now kubelet.service
 
+### systemctl daemon-reload
 
-NOte: Till here on all the nodes [master/worker]
+NOte: Till here all above steps on all the nodes [master/worker]
 ##############################################################################
-Step6#  (Only on master node)
+Step6#  (Below Only on master node)
 sudo kubeadm config images pull
 
-
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
-
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-
-
 kubectl create -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/tigera-operator.yaml
-
 
 curl -O https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
 or
 wget https://raw.githubusercontent.com/projectcalico/calico/v3.26.1/manifests/custom-resources.yaml
+
 
 sed -i 's/cidr: 192\.168\.0\.0\/16/cidr: 10.244.0.0\/16/g' custom-resources.yaml
 
@@ -163,6 +160,14 @@ kubectl create -f custom-resources.yaml
 sudo kubeadm token create --print-join-command
 
 #############################
+Once master node complated with add-on services.
+sudo kubeadm token create --print-join-command
+NOte: Outcome of above command need to execute from worker node once your worker node ready [ 1-139 line ]
+
+
+
+
+
 Troubleshooting steps 
 kubeadm reset -f 
 rm -rf /etc/cni/net.d
