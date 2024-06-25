@@ -111,6 +111,9 @@ SystemdCgroup = true
 sudo systemctl reboot
 sudo systemctl status containerd.service
 
+# vim /etc/crictl.yaml
+runtime-endpoint: unix:///run/containerd/containerd.sock
+
 Step5#
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
