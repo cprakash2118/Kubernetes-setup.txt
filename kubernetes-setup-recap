@@ -108,6 +108,8 @@ sudo swapoff -a
 Using your preferred text editor, open the /etc/containerd/config.toml file and set the SystemdCgroup variable to true (SystemdCgroup = true):
 SystemdCgroup = true
 
+systemctl enable --now containerd.service 
+
 sudo systemctl reboot
 sudo systemctl status containerd.service
 
