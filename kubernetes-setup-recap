@@ -167,5 +167,14 @@ sed -i 's/cidr: 192\.168\.0\.0\/16/cidr: 10.244.0.0\/16/g' custom-resources.yaml
 
 kubectl create -f custom-resources.yaml
 
+
+#############################
+Troubleshooting steps 
+kubeadm reset -f 
+rm -rf /etc/cni/net.d
+rm -rf /var/lib/cni/
+rm -rf /etc/kubernetes
+
+
 sudo kubeadm token create --print-join-command
  
