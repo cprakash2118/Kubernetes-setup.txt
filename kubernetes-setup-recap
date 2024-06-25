@@ -1,4 +1,6 @@
 Student20 = StudentX 
+
+###
 Step1)
 - Login to your Master node as root/redhat or student/student. 
 - Setup the hostname and local name resolution 
@@ -46,5 +48,30 @@ cat /etc/hosts
 
 Open 3 terminals - and ssh to both worker nodes via 2nd and 3rd termimals.
 1st-termimal - master20-01   
-2nd-termimal - worker20-01
-3rd-termimal - worker20-02
+2nd-termimal - worker20-01  ; ssh root@172.25.231.XX
+3rd-termimal - worker20-02  ; ssh root@172.25.231.XX
+
+
+
+###
+Step2:-Add Kernel Modules
+To load the necessary kernel modules required by Kubernetes, you can use the modprobe command followed by the module names (on each node).
+
+modprobe br_netfilter
+modprobe ip_vs
+modprobe ip_vs_rr
+modprobe ip_vs_wrr
+modprobe ip_vs_sh
+modprobe overlay
+
+lsmod | egrep 'br_netfilter|ip_vs|ip_vs_rr|ip_vs_sh|ip_vs_wrr|overlay'
+
+
+cat > /etc/modules-load.d/kubernetes.conf << EOF
+br_netfilter
+ip_vs
+ip_vs_rr
+ip_vs_wrr
+ip_vs_sh
+overlay
+EOF
