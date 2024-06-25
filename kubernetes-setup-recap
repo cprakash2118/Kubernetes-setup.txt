@@ -116,6 +116,8 @@ sudo systemctl status containerd.service
 # vim /etc/crictl.yaml
 runtime-endpoint: unix:///run/containerd/containerd.sock
 
+ dnf install kernel-devel
+
 Step5#
 cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
